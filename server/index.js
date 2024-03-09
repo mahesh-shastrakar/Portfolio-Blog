@@ -17,8 +17,8 @@ mongoose
 app.listen(process.env.PORT, () => {
   console.log(`Server running on http://localhost:${process.env.PORT}`);
 });
-app.use("/user", userRouter);
-app.use("/auth", authRouter);
+app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
 app.use((err, req, res, next) => {
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
   const message = err.message || "Internal Server Error";
