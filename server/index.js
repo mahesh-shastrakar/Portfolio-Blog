@@ -5,7 +5,6 @@ const app = express();
 const userRouter = require("./routes/user.route");
 const authRouter = require("./routes/auth.route");
 const port = 3000;
-app.use(express.json());
 mongoose
   .connect(process.env.DB_URL)
   .then(() => {
@@ -17,8 +16,9 @@ mongoose
 app.listen(process.env.PORT, () => {
   console.log(`Server running on http://localhost:${process.env.PORT}`);
 });
-app.use("/api/user", userRouter);
+app.use(express.json());
 app.use("/api/auth", authRouter);
+app.use("/api/user", userRouter);
 app.use((err, req, res, next) => {
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
   const message = err.message || "Internal Server Error";

@@ -50,8 +50,49 @@ const login = async (req, res, next) => {
     next(error);
   }
 };
+const googleOAuth = async (req, res, next) => {
+  const { name, email, googlePhotoURL } = req.body;
+  try {
+    const user = await User.findOne({
+      email,
+    });
+    if (user) {
+      const { password, ...rest } = user._doc;
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "1hr",
+      });
+      res
+        .status(200)
+        .cookie("access_token", token, { httpOnly: true })
+        .json(rest);
+    } else {
+      const generatedPassword = Math.random().toString(36).slice(-8);
+      const hashedPassword = bcrypt.hashSync(generatedPassword, 10);
+      const newUser = new User({
+        username:
+          name.split(" ").join("").toLowerCase() +
+          Math.random().toString(9).slice(-3),
+        email: email,
+        password: hashedPassword,
+        profilePicture: googlePhotoURL,
+      });
+      await newUser.save();
+      const { password, ...rest } = newUser._doc;
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
+        expiresIn: "1hr",
+      });
+      res
+        .status(200)
+        .cookie("access_token", token, { httpOnly: true })
+        .json(rest);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 
 const logout = (req, res) => {
   res.json({ message: "Logout successful" });
 };
-module.exports = { register, login, logout };
+
+module.exports = { register, login, logout, googleOAuth };
