@@ -19,6 +19,13 @@ app.listen(process.env.PORT, () => {
 });
 app.use("/user", userRouter);
 app.use("/auth", authRouter);
+app.use((err, req, res, next) => {
+  const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
+  const message = err.message || "Internal Server Error";
+  res
+    .status(statusCode)
+    .json({ success: false, statusCode: statusCode, message: message });
+});
 app.get("/test", (req, res) => {
   res.json({ message: "API is working!  " });
 });
