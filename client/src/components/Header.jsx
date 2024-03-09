@@ -9,9 +9,11 @@ const Header = () => {
     <Navbar className=" m-4 border-4 ">
       <Link
         to="/"
-        className=" self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white "
+        className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white "
       >
-        Mahesh Shastrakar
+        <span className="px-2 py-1 bg-gradient-to-r from-yellow-500 via-purple-500 to-pink-500 rounded-lg text-white ">
+          Mahesh Shastrakar
+        </span>
       </Link>
       <form>
         <TextInput
