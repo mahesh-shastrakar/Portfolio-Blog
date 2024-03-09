@@ -24,23 +24,30 @@ const register = async (req, res, next) => {
   }
 };
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    if (!email || !password || email === "" || password === "") {
+      next(errorHandler(400, "All fields are required"));
+    }
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Invalid email or password" });
+      next(errorHandler(404, "User not found"));
     }
-    const validPassword = await user.comparePassword(password);
-    if (!validPassword) {
-      return res.status(400).json({ message: "Invalid email or password" });
+    const isMatch = bcrypt.compareSync(password, user.password);
+    if (!isMatch) {
+      next(errorHandler(400, "Invalid credentials"));
     }
-    const token = jwt.sign({ id: user._id }, process.env.SECRET, {
-      expiresIn: 86400,
+    const { password: pass, ...rest } = user._doc;
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1hr",
     });
-    res.json({ token });
+    res
+      .status(200)
+      .cookie("access_token", token, { httpOnly: true })
+      .json(rest);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
