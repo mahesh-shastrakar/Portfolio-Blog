@@ -4,6 +4,12 @@ import { useSelector } from "react-redux";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import {
+  updateStart,
+  updateFailure,
+  updateSuccess,
+} from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
+import {
   getStorage,
   ref,
   uploadBytesResumable,
@@ -16,8 +22,12 @@ const DashProfile = () => {
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
   const [imageFileUploading, setImageFileUploading] = useState(false);
+  const [updateUserSuccess, setUpdateUserSuccess] = useState("");
+  const [updateUserError, setUpdateUserError] = useState("");
+  const [formData, setFormData] = useState({});
   const filePickerRef = React.useRef();
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   useEffect(() => {
     if (imageFile) {
       uploadImage();
@@ -50,12 +60,15 @@ const DashProfile = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImageFileUrl(downloadURL);
+          setFormData({ ...formData, profilePicture: downloadURL });
           setImageFileUploading(false);
         });
       }
     );
   };
-
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -65,10 +78,44 @@ const DashProfile = () => {
       uploadImage();
     }
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setUpdateUserError(null);
+    setUpdateUserSuccess(null);
+    if (Object.keys(formData).length === 0) {
+      setUpdateUserError("No changes made");
+      return;
+    }
+    if (imageFileUploading) {
+      setUpdateUserError("Please wait for image to upload");
+      return;
+    }
+    try {
+      dispatch(updateStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        dispatch(updateFailure(data.message));
+        setUpdateUserError(data.message);
+      } else {
+        dispatch(updateSuccess(data));
+        setUpdateUserSuccess("User's profile updated successfully");
+      }
+    } catch (error) {
+      dispatch(updateFailure(error.message));
+      setUpdateUserError(error.message);
+    }
+  };
   return (
     <div className="max-w-lg mx-auto p-3 w-full h-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <input
           type="file"
           accept="image/*"
@@ -112,10 +159,36 @@ const DashProfile = () => {
             {imageFileUploadError}
           </Alert>
         )}
-        <TextInput label="Name" value={currentUser.username} disabled />
-        <TextInput label="Email" value={currentUser.email} disabled />
-        <TextInput type="password" label="Password" placeholder="Password" />
-        <Button gradientDuoTone={"purpleToBlue"} outline>
+        <TextInput
+          label="username"
+          id="username"
+          defaultValue={currentUser.username}
+          onChange={handleChange}
+        />
+        <TextInput
+          label="email"
+          id="email"
+          defaultValue={currentUser.email}
+          onChange={handleChange}
+        />
+        <TextInput
+          type="password"
+          id="password"
+          label="Password"
+          placeholder="Password"
+          onChange={handleChange}
+        />
+        {updateUserSuccess && (
+          <Alert type="success" color={"success"}>
+            {updateUserSuccess}
+          </Alert>
+        )}
+        {updateUserError && (
+          <Alert type="error" color={"failure"}>
+            {updateUserError}
+          </Alert>
+        )}
+        <Button gradientDuoTone={"purpleToBlue"} type="submit" outline>
           Update
         </Button>
       </form>

@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user.model");
-const errorHandler = require("../utils/error.js");
+const { errorHandler } = require("../utils/error");
 
 const test = (req, res) => {
   res.json({ message: "API is working!" });

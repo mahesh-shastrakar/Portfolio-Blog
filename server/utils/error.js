@@ -3,5 +3,5 @@ const errorHandler = (statusCode, message) => {
   error.statusCode = statusCode;
   return error;
 };
-module.exports = errorHandler;
+module.exports = { errorHandler };
 // middleware to handle errors
