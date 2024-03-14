@@ -5,6 +5,19 @@ const { errorHandler } = require("../utils/error");
 const test = (req, res) => {
   res.json({ message: "API is working!" });
 };
+const deleteUser = async (req, res, next) => {
+  const userId = req.params.userId;
+  const user = req.user;
+  if (userId !== user.id) {
+    return next(errorHandler(401, "Unauthorized"));
+  }
+  try {
+    await User.findByIdAndDelete(userId);
+    res.json({ message: "User has been deleted" });
+  } catch (err) {
+    return next(errorHandler(500, err.message));
+  }
+};
 const update = async (req, res, next) => {
   const userId = req.params.userId;
   const user = req.user;
@@ -54,4 +67,4 @@ const update = async (req, res, next) => {
     return next(errorHandler(500, err.message));
   }
 };
-module.exports = { test, update };
+module.exports = { test, update, deleteUser };
