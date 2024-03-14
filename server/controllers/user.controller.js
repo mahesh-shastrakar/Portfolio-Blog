@@ -18,6 +18,7 @@ const deleteUser = async (req, res, next) => {
     return next(errorHandler(500, err.message));
   }
 };
+
 const update = async (req, res, next) => {
   const userId = req.params.userId;
   const user = req.user;
@@ -67,4 +68,11 @@ const update = async (req, res, next) => {
     return next(errorHandler(500, err.message));
   }
 };
-module.exports = { test, update, deleteUser };
+const signout = (req, res, next) => {
+  try {
+    res.clearCookie("token").json({ message: "Signout successful" });
+  } catch (err) {
+    return next(errorHandler(500, err.message));
+  }
+};
+module.exports = { test, update, deleteUser, signout };
