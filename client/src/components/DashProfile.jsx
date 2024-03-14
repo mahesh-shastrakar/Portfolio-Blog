@@ -21,6 +21,7 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { app } from "../../firebase";
+import { Link } from "react-router-dom";
 const DashProfile = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
@@ -33,7 +34,7 @@ const DashProfile = () => {
   const [showModal, setShowModal] = useState(false);
   const [deleteUserError, setDeleteUserError] = useState("");
   const filePickerRef = React.useRef();
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
     if (imageFile) {
@@ -233,6 +234,7 @@ const DashProfile = () => {
             {deleteUserError}
           </Alert>
         )}
+
         <Modal
           show={showModal}
           onClose={() => setShowModal(false)}
@@ -258,9 +260,25 @@ const DashProfile = () => {
             </Modal.Body>
           </Modal.Header>
         </Modal>
-        <Button gradientDuoTone={"purpleToBlue"} type="submit" outline>
-          Update
+        <Button
+          gradientDuoTone={"purpleToBlue"}
+          type="submit"
+          outline
+          disabled={loading || imageFileUploading}
+        >
+          {loading || imageFileUploading ? "Loading.." : "Update"}
         </Button>
+        {currentUser.isAdmin && (
+          <Link to={"/create-post"}>
+            <Button
+              type="button"
+              gradientDuoTone={"purpleToPink"}
+              className="w-full mx-auto"
+            >
+              Create a Post
+            </Button>
+          </Link>
+        )}
       </form>
       <div className="flex justify-center gap-4 mt-4">
         <Button
