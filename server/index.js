@@ -7,6 +7,9 @@ const userRouter = require("./routes/user.route");
 const authRouter = require("./routes/auth.route");
 const postRouter = require("./routes/post.route");
 const commentRouter = require("./routes/comment.route");
+const path = require("path");
+
+const __dirname = path.resolve();
 mongoose
   .connect(process.env.DB_URL)
   .then(() => {
@@ -25,6 +28,10 @@ app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
 app.use("/api/comment", commentRouter);
 
+app.use(express.static(path.join(__dirname, "/client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 app.use((err, req, res, next) => {
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
   const message = err.message || "Internal Server Error";

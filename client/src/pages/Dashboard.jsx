@@ -6,6 +6,7 @@ import DashProfile from "../components/DashProfile";
 import DashPosts from "../components/DashPosts";
 import DashUsers from "../components/DashUsers";
 import DashComments from "../components/DashComments";
+import DashboardComp from "../components/DashboardComp";
 const Dashboard = () => {
   const { currentUser } = useSelector((state) => state.user);
   const location = useLocation();
@@ -33,6 +34,8 @@ const Dashboard = () => {
 
       {/*comments*/}
       {currentUser.isAdmin && tab === "comments" && <DashComments />}
+      {/*dashboard*/}
+      {currentUser.isAdmin && tab === "dashboard" && <DashboardComp />}
     </div>
   );
 };

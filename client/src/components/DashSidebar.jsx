@@ -3,6 +3,8 @@ import { Sidebar } from "flowbite-react";
 import {
   HiAnnotation,
   HiArrowSmRight,
+  HiChartBar,
+  HiChartPie,
   HiDocumentText,
   HiOutlineUserGroup,
   HiUser,
@@ -45,7 +47,7 @@ const DashSidebar = () => {
             <Link to="/dashboard?tab=dashboard">
               <Sidebar.Item
                 active={tab === "dashboard"}
-                icon={HiAnnotation}
+                icon={HiChartBar}
                 as="div"
               >
                 Dashboard
