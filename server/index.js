@@ -30,9 +30,7 @@ app.use("/api/post", postRouter);
 app.use("/api/comment", commentRouter);
 
 app.use(express.static(path.join(__dirname, "/client/dist")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
+
 app.use((err, req, res, next) => {
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
   const message = err.message || "Internal Server Error";
@@ -42,4 +40,7 @@ app.use((err, req, res, next) => {
 });
 app.get("/test", (req, res) => {
   res.json({ message: "API is working!  " });
+});
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
