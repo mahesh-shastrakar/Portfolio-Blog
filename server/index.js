@@ -9,7 +9,6 @@ const postRouter = require("./routes/post.route");
 const commentRouter = require("./routes/comment.route");
 const path = require("path");
 
-const __dirname = path.resolve();
 mongoose
   .connect(process.env.DB_URL)
   .then(() => {
@@ -18,6 +17,8 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
+const __dirname = path.resolve();
 app.listen(process.env.PORT, () => {
   console.log(`Server running on http://localhost:${process.env.PORT}`);
 });
