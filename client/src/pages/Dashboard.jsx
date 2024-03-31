@@ -5,6 +5,7 @@ import DashSidebar from "../components/DashSidebar";
 import DashProfile from "../components/DashProfile";
 import DashPosts from "../components/DashPosts";
 import DashUsers from "../components/DashUsers";
+import DashComments from "../components/DashComments";
 const Dashboard = () => {
   const { currentUser } = useSelector((state) => state.user);
   const location = useLocation();
@@ -29,6 +30,9 @@ const Dashboard = () => {
 
       {/*users*/}
       {currentUser.isAdmin && tab === "users" && <DashUsers />}
+
+      {/*comments*/}
+      {currentUser.isAdmin && tab === "comments" && <DashComments />}
     </div>
   );
 };

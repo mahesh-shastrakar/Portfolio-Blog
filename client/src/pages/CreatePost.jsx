@@ -36,7 +36,7 @@ const CreatePost = () => {
       if (!res.ok) {
         setPublishError(data.message);
       } else {
-        navigate(`/${data.slug}`);
+        navigate(`/post/${data.slug}`);
         setPublishError(null);
         setFormData({});
       }
