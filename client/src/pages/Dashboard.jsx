@@ -3,7 +3,9 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import DashSidebar from "../components/DashSidebar";
 import DashProfile from "../components/DashProfile";
+import DashPosts from "../components/DashPosts";
 const Dashboard = () => {
+  const { currentUser } = useSelector((state) => state.user);
   const location = useLocation();
   const [tab, setTab] = useState("");
   useEffect(() => {
@@ -19,7 +21,10 @@ const Dashboard = () => {
         {/*sidebar*/}
         <DashSidebar />
       </div>
+      {/*profile*/}
       {tab === "profile" && <DashProfile />}
+      {/*posts*/}
+      {currentUser.isAdmin && tab === "posts" && <DashPosts />}
     </div>
   );
 };
