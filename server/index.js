@@ -6,6 +6,7 @@ const app = express();
 const userRouter = require("./routes/user.route");
 const authRouter = require("./routes/auth.route");
 const postRouter = require("./routes/post.route");
+const commentRouter = require("./routes/comment.route");
 mongoose
   .connect(process.env.DB_URL)
   .then(() => {
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
+app.use("/api/comment", commentRouter);
 
 app.use((err, req, res, next) => {
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;

@@ -10,6 +10,7 @@ import FooterComponent from "./components/FooterComponent";
 import PrivateRoute from "./components/PrivateRoute";
 import CreatePost from "./pages/CreatePost";
 import UpdatePost from "./pages/UpdatePost";
+import PostPage from "./pages/PostPage";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/create-post" element={<CreatePost />}></Route>
             <Route path="/update-post/:postId" element={<UpdatePost />}></Route>
           </Route>
+          <Route path="/post/:postSlug" element={<PostPage />}></Route>
         </Routes>
         <FooterComponent />
       </Router>
