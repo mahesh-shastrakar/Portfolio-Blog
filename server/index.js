@@ -32,7 +32,7 @@ app.use("/api/comment", commentRouter);
 app.use(express.static(path.join(__dirname, "/client/dist")));
 
 app.get("*", (req, res) => {
-  res.sendFile("../client/dist/index.html");
+  res.sendFile("../client/dist/index.html", { root: "src" });
 });
 app.use((err, req, res, next) => {
   const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
