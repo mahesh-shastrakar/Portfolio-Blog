@@ -12,4 +12,9 @@ router.delete(
   verifyUser,
   post_controller.deletePost
 );
+router.put(
+  "/updatepost/:postId/:userId",
+  verifyUser,
+  post_controller.updatePost
+);
 module.exports = router;
