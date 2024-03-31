@@ -41,6 +41,6 @@ app.use((err, req, res, next) => {
 app.get("/test", (req, res) => {
   res.json({ message: "API is working!  " });
 });
-app.get("*", (req, res) => {
-  res.sendFile(path.join("client", "dist", "index.html"));
-});
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+// });
