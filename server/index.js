@@ -18,7 +18,7 @@ mongoose
     console.log(err);
   });
 
-// const __dirname = path.resolve();
+const __dirname = path.resolve();
 app.listen(process.env.PORT, () => {
   console.log(`Server running on http://localhost:${process.env.PORT}`);
 });
@@ -31,7 +31,7 @@ app.use("/api/comment", commentRouter);
 
 app.use(express.static(path.join(__dirname, "/client/dist")));
 
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile("../client/dist/index.html", { root: "src" });
 });
 app.use((err, req, res, next) => {
