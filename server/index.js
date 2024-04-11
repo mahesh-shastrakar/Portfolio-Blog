@@ -31,7 +31,7 @@ app.use("/api/comment", commentRouter);
 
 app.use(express.static(path.join(__dirname, "/client/dist")));
 
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile("../client/dist/index.html", { root: "src" });
 });
 app.use((err, req, res, next) => {
