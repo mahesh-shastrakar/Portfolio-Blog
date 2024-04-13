@@ -52,7 +52,7 @@ const SignIn = () => {
               Mahesh Shastrakar
             </span>
           </Link>
-          <p className=" text-sm mt-5 ">This is text something</p>
+          <p className=" text-sm mt-5 ">I'm a web developer</p>
         </div>
         {/*Right*/}
         <div className="flex-1">

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
 
 export default function Home() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState({});
 
   useEffect(() => {
     try {
