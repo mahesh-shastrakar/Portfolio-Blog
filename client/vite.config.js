@@ -7,6 +7,7 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://portfolio-blog-backend-three.vercel.app",
+        changeOrigin: true,
         secure: false,
       },
     },
