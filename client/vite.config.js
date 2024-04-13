@@ -6,8 +6,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://portfolio-blog-backend-three.vercel.app",
-        secure: true,
+        target: "http://portfolio-blog-backend-three.vercel.app",
+        secure: false,
       },
     },
   },
