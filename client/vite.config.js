@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": "https://portfolio-blog-backend-three.vercel.app",
-      rewrite: (path) => path.replace(/^\/api/, ""),
+      // rewrite: (path) => path.replace(/^\/api/, ""),
     },
   },
   plugins: [react()],
