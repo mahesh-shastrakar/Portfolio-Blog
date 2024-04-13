@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const userRouter = require("./routes/user.route");
 const authRouter = require("./routes/auth.route");
 const postRouter = require("./routes/post.route");
@@ -16,6 +17,7 @@ mongoose
   });
 
 const app = express();
+
 app.use(
   cors({
     origin: ["https://mahesh-portfolio-blog.vercel.app"],
