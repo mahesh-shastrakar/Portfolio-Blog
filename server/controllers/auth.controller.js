@@ -51,6 +51,7 @@ const login = async (req, res, next) => {
       .cookie("access_token", token, { httpOnly: true })
       .json(rest);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };

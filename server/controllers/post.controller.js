@@ -70,6 +70,7 @@ const deletePost = async (req, res, next) => {
     }
     res.status(200).json({ message: "Post deleted" });
   } catch (error) {
+    console.log(error);
     next(errorHandler(500, error.message));
   }
 };
