@@ -30,7 +30,7 @@ const SignIn = () => {
         },
         body: JSON.stringify(formData),
       });
-      const data = await JSON.parse(response);
+      const data = await response.json();
       if (response.ok) {
         dispatch(signInSuccess(data));
         navigate("/");
