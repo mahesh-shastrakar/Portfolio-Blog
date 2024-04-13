@@ -7,12 +7,16 @@ export default function Home() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await fetch("/api/post/getPosts");
-      const data = await res.json();
-      setPosts(data.posts);
-    };
-    fetchPosts();
+    try {
+      const fetchPosts = async () => {
+        const res = await fetch("/api/post/getPosts");
+        const data = await res.json();
+        setPosts(data.posts);
+      };
+      fetchPosts();
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
   return (
     <div>
