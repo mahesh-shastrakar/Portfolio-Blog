@@ -12,7 +12,7 @@ const SignIn = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, error: errorMessage } = useSelector((state) => state.user);
+  const { loading, errorMessage } = useSelector((state) => state.user);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
@@ -101,11 +101,13 @@ const SignIn = () => {
               </Link>
             </div>
           </div>
-          {errorMessage && (
-            <Alert className="mt-5" color={"failure"}>
-              {errorMessage}
-            </Alert>
-          )}
+          {errorMessage &&
+            (console.log(errorMessage),
+            (
+              <Alert className="mt-5" color={"failure"}>
+                {errorMessage}
+              </Alert>
+            ))}
         </div>
       </div>
     </div>
