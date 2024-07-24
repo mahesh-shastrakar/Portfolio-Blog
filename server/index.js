@@ -36,6 +36,7 @@ app.use((err, req, res, next) => {
     .status(statusCode)
     .json({ success: false, statusCode: statusCode, message: message });
 });
-app.get("/test", (req, res) => {
-  res.json({ message: "API is working!  " });
-});
+// app.get("/test", (req, res) => {
+//   res.json({ message: "API is working!  " });
+// });
+//
