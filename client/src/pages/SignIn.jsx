@@ -101,11 +101,13 @@ const SignIn = () => {
               </Link>
             </div>
           </div>
-          {errorMessage && (
-            <Alert className="mt-5" color={"failure"}>
-              {errorMessage}
-            </Alert>
-          )}
+          {errorMessage &&
+            (console.log(errorMessage),
+            (
+              <Alert className="mt-5" color={"failure"}>
+                {errorMessage}
+              </Alert>
+            ))}
         </div>
       </div>
     </div>

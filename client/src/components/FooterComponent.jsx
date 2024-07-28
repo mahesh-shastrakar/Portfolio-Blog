@@ -18,9 +18,9 @@ const FooterComponent = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 gap-8 mt-4 sm:grid-cols-3 sm:gap-6">
+          <div className="grid grid-cols-2 gap-8 mt-4 sm:grid-cols-2 sm:gap-12">
             <div>
-              <Footer.Title title="About" />
+              <Footer.Title title="Links" />
               <Footer.LinkGroup col>
                 <Footer.Link
                   href="https://www.linkedin.com/in/maheshshastrakar"
@@ -29,25 +29,37 @@ const FooterComponent = () => {
                 >
                   LinkedIn
                 </Footer.Link>
-                <Footer.Link href="/about">Mahesh About</Footer.Link>
-              </Footer.LinkGroup>
-            </div>
-
-            <div>
-              <Footer.Title title="Page" />
-              <Footer.LinkGroup col>
                 <Footer.Link
-                  href="https://www.linkedin.com/in/maheshshastrakar"
+                  href="https://drive.google.com/drive/u/0/folders/1XLojt7AEEeleEM-rcKObw7l8Tu8byijw"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  LinkedIn
+                  Download Resume
                 </Footer.Link>
-                <Footer.Link href="/about">Mahesh About</Footer.Link>
               </Footer.LinkGroup>
             </div>
 
             <div>
+              <Footer.Title title="Contact" />
+              <Footer.LinkGroup col>
+                <Footer.Link
+                  href="mailto:maheshshastrakar123@gmail.com"
+                  // target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Email
+                </Footer.Link>
+                <Footer.Link
+                  href="tel:+917666831050"
+                  // target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Phone
+                </Footer.Link>
+              </Footer.LinkGroup>
+            </div>
+
+            {/* <div>
               <Footer.Title title="New" />
               <Footer.LinkGroup col>
                 <Footer.Link
@@ -59,7 +71,7 @@ const FooterComponent = () => {
                 </Footer.Link>
                 <Footer.Link href="/about">Mahesh About</Footer.Link>
               </Footer.LinkGroup>
-            </div>
+            </div> */}
           </div>
         </div>
         <Footer.Divider />

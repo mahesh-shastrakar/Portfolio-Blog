@@ -34,6 +34,7 @@ const CreatePost = () => {
       });
       const data = await res.json();
       if (!res.ok) {
+        console.log(data);
         setPublishError(data.message);
       } else {
         navigate(`/post/${data.slug}`);
@@ -41,6 +42,7 @@ const CreatePost = () => {
         setFormData({});
       }
     } catch (error) {
+      console.log(error);
       setPublishError(error.message);
     }
   };
