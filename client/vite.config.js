@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 export default defineConfig({
   server: {
     proxy: {
-      "/api": "portfolio-blog-backend-w7xiva9g5.vercel.app",
+      "/api": "https://portfolio-blog-backend-w7xiva9g5.vercel.app",
       // rewrite: (path) => path.replace(/^\/api/, ""),
     },
   },
