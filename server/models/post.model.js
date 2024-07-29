@@ -1,5 +1,7 @@
+// Require mongoose
 const mongoose = require("mongoose");
 
+// Define the post schema with the required fields and default values for the post module
 const postSchema = new mongoose.Schema(
   {
     userId: {
@@ -33,4 +35,5 @@ const postSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// export the post model module with the schema definition
 module.exports = mongoose.model("Post", postSchema);

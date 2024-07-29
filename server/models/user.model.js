@@ -1,6 +1,8 @@
+// Require Mongoose
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+// Define the user schema with the required fields and default values for the user module
 const userSchema = new Schema(
   {
     username: {
@@ -29,5 +31,9 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 );
+
+// Export the user model module with the schema definition
 const User = mongoose.model("User", userSchema);
+
+// Export the User model
 module.exports = User;

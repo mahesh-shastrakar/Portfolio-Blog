@@ -1,7 +1,11 @@
-const errorHandler = (statusCode, message) => {
-  const error = new Error(message);
+// error generator function to handle errors
+const generateError = (statusCode, message) => {
+  // create a new error object with the status code and message
+  const error = new Error();
   error.statusCode = statusCode;
-  return JSON.parse(error);
+  error.message = message;
+  return error;
 };
-module.exports = { errorHandler };
-// middleware to handle errors
+
+// export the error handler function
+module.exports = { generateError };
