@@ -12,7 +12,9 @@ const SignIn = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, error: errorMessage } = useSelector((state) => state.user);
+  const { loading, error: errorMessage } = useSelector(
+    (state) => state.currentUser
+  );
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
