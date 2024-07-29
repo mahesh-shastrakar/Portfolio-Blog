@@ -17,7 +17,7 @@ function App() {
   return (
     <>
       <Router>
-        <Header></Header>
+        <Header />
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
