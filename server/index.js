@@ -30,7 +30,7 @@ app.use("/api/post", postRouter);
 app.use("/api/comment", commentRouter);
 
 app.use((err, req, res, next) => {
-  const statusCode = res.statusCode !== 200 ? res.statusCode : 500;
+  const statusCode = res.statusCode || 500;
   const message = err.message || "Internal Server Error";
   res
     .status(statusCode)
