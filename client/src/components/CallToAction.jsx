@@ -1,5 +1,7 @@
+// Desc: Call to action component to visit Github profile
 import { Button } from "flowbite-react";
 
+// Create a functional component CallToAction
 export default function CallToAction() {
   return (
     <div className="flex flex-col sm:flex-row p-3 border border-teal-500 justify-center items-center rounded-tl-3xl rounded-br-3xl text-center">
@@ -12,6 +14,7 @@ export default function CallToAction() {
           gradientDuoTone="purpleToPink"
           className="rounded-tl-xl rounded-bl-none rounded-tr-none"
         >
+          {/* // Add the link to the Github profile in the href attribute of the anchor tag and set the target attribute to "_blank" to open the link in a new tab and the rel attribute to "noopener noreferrer" for security reasons */}
           <a
             href="https://github.com/mahesh-shastrakar"
             target="_blank"

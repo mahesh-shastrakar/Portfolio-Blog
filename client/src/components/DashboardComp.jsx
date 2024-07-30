@@ -1,3 +1,4 @@
+// Importing Required Libraries
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -9,7 +10,9 @@ import {
 import { Button, Table } from "flowbite-react";
 import { Link } from "react-router-dom";
 
+// DashboardComp functional component
 export default function DashboardComp() {
+  // useState hook to store the users, comments, posts, totalUsers, totalPosts, totalComments, lastMonthUsers, lastMonthPosts, and lastMonthComments state variables and set the default values
   const [users, setUsers] = useState([]);
   const [comments, setComments] = useState([]);
   const [posts, setPosts] = useState([]);
@@ -19,8 +22,13 @@ export default function DashboardComp() {
   const [lastMonthUsers, setLastMonthUsers] = useState(0);
   const [lastMonthPosts, setLastMonthPosts] = useState(0);
   const [lastMonthComments, setLastMonthComments] = useState(0);
+
+  // useSelector hook to get the currentUser from the state
   const { currentUser } = useSelector((state) => state.user);
+
+  // useEffect hook to fetch the users, posts, and comments data from the server using async function fetch and set the users, posts, and comments state variables
   useEffect(() => {
+    // async function to fetch the users data from the server
     const fetchUsers = async () => {
       try {
         const res = await fetch("/api/user/getusers?limit=5");
@@ -34,6 +42,8 @@ export default function DashboardComp() {
         console.log(error.message);
       }
     };
+
+    // async function to fetch the posts data from the server
     const fetchPosts = async () => {
       try {
         const res = await fetch("/api/post/getposts?limit=5");
@@ -47,6 +57,8 @@ export default function DashboardComp() {
         console.log(error.message);
       }
     };
+
+    // async function to fetch the comments data from the server
     const fetchComments = async () => {
       try {
         const res = await fetch("/api/comment/getcomments?limit=5");
@@ -60,12 +72,16 @@ export default function DashboardComp() {
         console.log(error.message);
       }
     };
+
+    // if the currentUser is an admin, call the fetchUsers, fetchPosts, and fetchComments functions
     if (currentUser.isAdmin) {
       fetchUsers();
       fetchPosts();
       fetchComments();
     }
   }, [currentUser]);
+
+  // return statement to render the DashboardComp component
   return (
     <div className="p-3 md:mx-auto">
       <div className="flex-wrap flex gap-4 justify-center">
@@ -128,11 +144,14 @@ export default function DashboardComp() {
               <Link to={"/dashboard?tab=users"}>See all</Link>
             </Button>
           </div>
+          {/* // Table component to display the users data in a table format */}
           <Table hoverable>
             <Table.Head>
               <Table.HeadCell>User image</Table.HeadCell>
               <Table.HeadCell>Username</Table.HeadCell>
             </Table.Head>
+
+            {/* // map through the users array and display the user profile picture and username in the table rows */}
             {users &&
               users.map((user) => (
                 <Table.Body key={user._id} className="divide-y">
@@ -150,6 +169,7 @@ export default function DashboardComp() {
               ))}
           </Table>
         </div>
+
         <div className="flex flex-col w-full md:w-auto shadow-md p-2 rounded-md dark:bg-gray-800">
           <div className="flex justify-between  p-3 text-sm font-semibold">
             <h1 className="text-center p-2">Recent comments</h1>
@@ -157,6 +177,8 @@ export default function DashboardComp() {
               <Link to={"/dashboard?tab=comments"}>See all</Link>
             </Button>
           </div>
+
+          {/* // Table component to display the comments data in a table format */}
           <Table hoverable>
             <Table.Head>
               <Table.HeadCell>Comment content</Table.HeadCell>
@@ -182,6 +204,8 @@ export default function DashboardComp() {
               <Link to={"/dashboard?tab=posts"}>See all</Link>
             </Button>
           </div>
+
+          {/* // Table component to display the posts data in a table format */}
           <Table hoverable>
             <Table.Head>
               <Table.HeadCell>Post image</Table.HeadCell>

@@ -1,3 +1,4 @@
+// the component that displays a single post in the home page is created in the PostCard component
 import React from "react";
 
 import { Link } from "react-router-dom";

@@ -23,8 +23,12 @@ mongoose
 
 // create express app
 const app = express();
-
+const corsOptions = {
+  origin: ["https://maheshshastrakar.online"],
+  optionsSuccessStatus: 200,
+};
 // middleware functions for parsing incoming requests
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRouter);

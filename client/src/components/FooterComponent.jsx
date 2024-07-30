@@ -1,7 +1,10 @@
+// the footer component is used to display the footer of the website
 import React from "react";
 import { Link } from "react-router-dom";
 import { Footer } from "flowbite-react";
 import { BsInstagram, BsTwitter, BsLinkedin, BsGithub } from "react-icons/bs";
+
+// Footer component
 const FooterComponent = () => {
   return (
     <Footer container className="border border-t-8 border-pink-500 ">
@@ -58,20 +61,6 @@ const FooterComponent = () => {
                 </Footer.Link>
               </Footer.LinkGroup>
             </div>
-
-            {/* <div>
-              <Footer.Title title="New" />
-              <Footer.LinkGroup col>
-                <Footer.Link
-                  href="https://www.linkedin.com/in/maheshshastrakar"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  LinkedIn
-                </Footer.Link>
-                <Footer.Link href="/about">Mahesh About</Footer.Link>
-              </Footer.LinkGroup>
-            </div> */}
           </div>
         </div>
         <Footer.Divider />

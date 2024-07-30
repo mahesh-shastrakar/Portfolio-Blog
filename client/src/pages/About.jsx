@@ -1,3 +1,4 @@
+// About page component
 export default function About() {
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -16,20 +17,6 @@ export default function About() {
               velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
               occaecat cupidatat non proident, sunt in culpa qui officia
             </p>
-
-            {/* <p>
-              On this blog, you'll find weekly articles and tutorials on topics
-              such as web development, software engineering, and programming
-              languages. Sahand is always learning and exploring new
-              technologies, so be sure to check back often for new content!
-            </p>
-
-            <p>
-              We encourage you to leave comments on our posts and engage with
-              other readers. You can like other people's comments and reply to
-              them as well. We believe that a community of learners can help
-              each other grow and improve.
-            </p> */}
           </div>
         </div>
       </div>

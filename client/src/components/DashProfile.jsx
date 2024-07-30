@@ -1,9 +1,10 @@
+// this component is used to display the user's profile and allow them to update their profile information, delete their account, and sign out
 import { Alert, Button, Modal, TextInput } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { Link } from "react-router-dom";
 import {
   updateStart,
   updateFailure,
@@ -13,6 +14,7 @@ import {
   deleteSuccess,
   signoutSuccess,
 } from "../redux/user/userSlice";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import {
   getStorage,
@@ -21,8 +23,9 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { app } from "../../firebase";
-import { Link } from "react-router-dom";
+
 const DashProfile = () => {
+  // useState hook to store the imageFile, imageFileUrl, imageFileUploadProgress, imageFileUploadError, imageFileUploading, updateUserSuccess, updateUserError, formData, showModal, deleteUserError state variables and set the default values
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
@@ -33,14 +36,21 @@ const DashProfile = () => {
   const [formData, setFormData] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [deleteUserError, setDeleteUserError] = useState("");
+  // the filePickerRef is used to reference the file input element in the form to upload the image file to the server
   const filePickerRef = React.useRef();
+
+  // useSelector hook to get the currentUser and loading state variables from the state
   const { currentUser, loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  // useEffect hook to upload the image file to the server
   useEffect(() => {
     if (imageFile) {
       uploadImage();
     }
   }, [imageFile]);
+
+  // uploadImage function to upload the image file to the server using Firebase storage and set the imageFileUrl state variable
   const uploadImage = async () => {
     setImageFileUploading(true);
     setImageFileUploadError(null);
@@ -74,9 +84,13 @@ const DashProfile = () => {
       }
     );
   };
+
+  // handleChange function to update the formData state variable when the input fields change value
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+
+  // handleImageChange function to update the imageFile and imageFileUrl state variables when the image file changes
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -86,10 +100,14 @@ const DashProfile = () => {
       uploadImage();
     }
   };
+
+  // handleSubmit function to update the user profile information using async function fetch
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUpdateUserError(null);
     setUpdateUserSuccess(null);
+
+    // if no changes are made, set the update user error message
     if (Object.keys(formData).length === 0) {
       setUpdateUserError("No changes made");
       return;
@@ -120,6 +138,8 @@ const DashProfile = () => {
       setUpdateUserError(error.message);
     }
   };
+
+  // handleDeleteUser function to delete the user account using async function fetch
   const handleDeleteUser = async () => {
     setShowModal(false);
     try {
@@ -139,6 +159,8 @@ const DashProfile = () => {
       setDeleteUserError(error.message);
     }
   };
+
+  // handleSignout function to sign out the user using async function fetch and dispatch the signoutSuccess action
   const handleSignout = async () => {
     try {
       const res = await fetch(`/api/user/signout`, {
@@ -153,10 +175,12 @@ const DashProfile = () => {
       console.log(error);
     }
   };
+
   return (
     <div className="max-w-lg mx-auto p-3 w-full h-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        {/* // input element to upload the image file using ref attribute and filePickerRef reference variable */}
         <input
           type="file"
           accept="image/*"
@@ -164,10 +188,15 @@ const DashProfile = () => {
           onChange={handleImageChange}
           hidden
         />
+
+        {/* // div element to display the user profile picture and allow the user to upload a new profile picture */}
+        {/* // onClick event listener to open the file input element when the user clicks on the profile picture */}
+
         <div
           className=" relative w-32 h-32 self-center cursor-pointer object-cover border shadow-md overflow-hidden rounded-full"
           onClick={() => filePickerRef.current.click()}
         >
+          {/* // if the imageFileUploadProgress is not null, render the CircularProgressbar component with the imageFileUploadProgress value */}
           {imageFileUploadProgress && (
             <CircularProgressbar
               value={imageFileUploadProgress}
@@ -195,6 +224,8 @@ const DashProfile = () => {
             className={`rounded-full w-full h-full object-cover border-8 border-[#e4e4e4]`}
           />
         </div>
+
+        {/* // if the imageFileUploadError is not null, render the Alert component with the imageFileUploadError value */}
         {imageFileUploadError && (
           <Alert type="error" color={"failure"}>
             {imageFileUploadError}
@@ -235,6 +266,7 @@ const DashProfile = () => {
           </Alert>
         )}
 
+        {/* // Modal component to display the confirmation message when the user clicks on the delete account button */}
         <Modal
           show={showModal}
           onClose={() => setShowModal(false)}

@@ -1,15 +1,22 @@
+// Desc: Dashboard component for displaying all comments in the database
 import { Modal, Table, Button } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { FaCheck, FaTimes } from "react-icons/fa";
 
+// DashComments functional component to display all comments in the database
 export default function DashComments() {
-  const { currentUser } = useSelector((state) => state.user);
+  // useState hook to store the comments, showMore, and showModal state variables and set the default values
   const [comments, setComments] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [commentIdToDelete, setCommentIdToDelete] = useState("");
+
+  // useSelector hook to get the currentUser from the state
+  const { currentUser } = useSelector((state) => state.user);
+
+  // useEffect hook to fetch the comments data from the server using async function fetch and set the comments state variable
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -25,11 +32,13 @@ export default function DashComments() {
         console.log(error.message);
       }
     };
+    // if the currentUser is an admin, call the fetchComments function
     if (currentUser.isAdmin) {
       fetchComments();
     }
   }, [currentUser._id]);
 
+  // handleShowMore function to fetch more comments from the server using async function fetch and set the comments state variable
   const handleShowMore = async () => {
     const startIndex = comments.length;
     try {
@@ -48,6 +57,7 @@ export default function DashComments() {
     }
   };
 
+  // handleDeleteComment function to delete a comment using async function fetch
   const handleDeleteComment = async () => {
     setShowModal(false);
     try {
@@ -59,6 +69,7 @@ export default function DashComments() {
       );
       const data = await res.json();
       if (res.ok) {
+        // filter the comments array to remove the comment with the commentIdToDelete
         setComments((prev) =>
           prev.filter((comment) => comment._id !== commentIdToDelete)
         );
@@ -73,6 +84,7 @@ export default function DashComments() {
 
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+      {/* // check if the currentUser is an admin and the comments array length is greater than 0 to display the comments in a table */}
       {currentUser.isAdmin && comments.length > 0 ? (
         <>
           <Table hoverable className="shadow-md">
@@ -84,6 +96,8 @@ export default function DashComments() {
               <Table.HeadCell>UserId</Table.HeadCell>
               <Table.HeadCell>Delete</Table.HeadCell>
             </Table.Head>
+
+            {/* // map through the comments array and display the comment data in the table rows and cells */}
             {comments.map((comment) => (
               <Table.Body className="divide-y" key={comment._id}>
                 <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -109,6 +123,8 @@ export default function DashComments() {
               </Table.Body>
             ))}
           </Table>
+
+          {/* // display the show more button if the showMore state variable is true and the comments array length is greater than 9 */}
           {showMore && (
             <button
               onClick={handleShowMore}
@@ -121,6 +137,8 @@ export default function DashComments() {
       ) : (
         <p>You have no comments yet!</p>
       )}
+
+      {/* // Modal component to display a confirmation message before deleting a comment and call the handleDeleteComment function */}
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}
@@ -135,6 +153,7 @@ export default function DashComments() {
               Are you sure you want to delete this comment?
             </h3>
             <div className="flex justify-center gap-4">
+              {/* // Button component to confirm the deletion of a comment using the handleDeleteComment function and the commentIdToDelete state variable */}
               <Button color="failure" onClick={handleDeleteComment}>
                 Yes, I'm sure
               </Button>

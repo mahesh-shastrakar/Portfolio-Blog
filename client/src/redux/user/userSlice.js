@@ -1,9 +1,14 @@
+// Desc: Redux slice for user
 import { createSlice } from "@reduxjs/toolkit";
+
+// Create a slice for user with initialState
 const initialState = {
   currentUser: null,
   error: null,
   loading: false,
 };
+
+// Create a userSlice with reducers for signInStart, signInSuccess, signInFailure, updateStart, updateSuccess, updateFailure, deleteStart, deleteSuccess, deleteFailure, and signoutSuccess
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -54,6 +59,8 @@ const userSlice = createSlice({
     },
   },
 });
+
+// Export the userSlice actions
 export const {
   signInStart,
   signInSuccess,
@@ -66,4 +73,6 @@ export const {
   deleteFailure,
   signoutSuccess,
 } = userSlice.actions;
+
+// Export the userSlice reducer
 export default userSlice.reducer;

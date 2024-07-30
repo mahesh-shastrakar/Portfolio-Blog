@@ -1,5 +1,8 @@
+// the theme toggle button and the sign in button are displayed in the header component
 import React from "react";
 import { useSelector } from "react-redux";
+
+// the children prop is passed to the ThemeProvider component to render the child components
 const ThemeProvider = ({ children }) => {
   const { theme } = useSelector((state) => state.theme);
   return (

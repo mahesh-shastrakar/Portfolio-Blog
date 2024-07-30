@@ -1,17 +1,21 @@
+// This component is used to display all the posts created by the current user. It also allows the user to delete a post. The user can also edit a post by clicking on the edit button. The user can also view the post by clicking on the post title or image.
 import { Modal, Table, Button } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { set } from "mongoose";
 
 export default function DashPosts() {
-  const { currentUser } = useSelector((state) => state.user);
+  // useState hook to store the userPosts, showMore, and showModal state variables and set the default values
   const [userPosts, setUserPosts] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState("");
+
+  // useSelector hook to get the currentUser from the state
+  const { currentUser } = useSelector((state) => state.user);
   useEffect(() => {
+    // async function to fetch the posts data from the server using async function fetch and set the userPosts state variable
     const fetchPosts = async () => {
       try {
         const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
@@ -31,6 +35,7 @@ export default function DashPosts() {
     }
   }, [currentUser._id]);
 
+  // handleShowMore function to fetch more posts from the server using async function fetch and set the userPosts state variable
   const handleShowMore = async () => {
     const startIndex = userPosts.length;
     try {
@@ -49,6 +54,7 @@ export default function DashPosts() {
     }
   };
 
+  // handleDeletePost function to delete a post using async function fetch
   const handleDeletePost = async () => {
     setShowModal(false);
     try {
@@ -73,6 +79,7 @@ export default function DashPosts() {
 
   return (
     <div className="table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+      {/* // if the currentUser is an admin and the userPosts length is greater than 0, render the Table component with the userPosts data */}
       {currentUser.isAdmin && userPosts.length > 0 ? (
         <>
           <Table hoverable className="shadow-md">
@@ -133,6 +140,7 @@ export default function DashPosts() {
               </Table.Body>
             ))}
           </Table>
+          {/* // if the showMore state variable is true, render the button to show more posts */}
           {showMore && (
             <button
               onClick={handleShowMore}
@@ -145,6 +153,8 @@ export default function DashPosts() {
       ) : (
         <p>You have no posts yet!</p>
       )}
+
+      {/* // Modal component to confirm the deletion of a post and call the handleDeletePost function */}
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}

@@ -10,15 +10,27 @@ import {
   signInFailure,
   signInSuccess,
 } from "../redux/user/userSlice";
+
+// OAuth component to handle Google sign in using Firebase
 const OAuth = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // Get the auth instance from the app instance
   const auth = getAuth(app);
+
+  // Function to handle the Google sign in button click event
   const handleGoogleClick = async () => {
+    // Create a new GoogleAuthProvider instance
     const provider = new GoogleAuthProvider();
+
+    // Set the custom parameters for the provider instance to prompt the user to select an account during sign in
     provider.setCustomParameters({ prompt: "select_account" });
+
     try {
       dispatch(signInStart());
+
+      // Sign in with Google using the GoogleAuthProvider instance and get the results from Google
       const resultsFromGoogle = await signInWithPopup(auth, provider);
       const response = await fetch("/api/auth/googleOAuth", {
         method: "POST",

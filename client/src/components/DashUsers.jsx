@@ -1,3 +1,4 @@
+// the DashUsers component is a table that displays all users in the database. It is only accessible to the admin user. The admin can delete any user from the database by clicking the delete button. The component also has a show more button that fetches more users from the database when clicked.
 import React from "react";
 
 import { Modal, Table, Button } from "flowbite-react";
@@ -7,11 +8,16 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { FaCheck, FaTimes } from "react-icons/fa";
 
 const DashUsers = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  // useState hook to store the users, showMore, and showModal state variables and set the default values
   const [users, setUsers] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState("");
+
+  // useSelector hook to get the currentUser from the state
+  const { currentUser } = useSelector((state) => state.user);
+
+  // useEffect hook to fetch the users data from the server using async function fetch and set the users state variable
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -27,17 +33,21 @@ const DashUsers = () => {
         console.log(error.message);
       }
     };
+
+    // Check if the current user is an admin and fetch the users
     if (currentUser.isAdmin) {
       fetchUsers();
     }
   }, [currentUser._id]);
 
+  // Function to handle the show more button click event
   const handleShowMore = async () => {
     const startIndex = users.length;
     try {
       const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`);
       const data = await res.json();
       if (res.ok) {
+        // Add the new users to the existing users array
         setUsers((prev) => [...prev, ...data.users]);
         if (data.users.length < 9) {
           setShowMore(false);
@@ -48,6 +58,7 @@ const DashUsers = () => {
     }
   };
 
+  // Function to handle the delete user button click event
   const handleDeleteUser = async () => {
     try {
       const res = await fetch(`/api/user/delete/${userIdToDelete}`, {
@@ -55,6 +66,7 @@ const DashUsers = () => {
       });
       const data = await res.json();
       if (res.ok) {
+        // Filter out the deleted user from the users array and close the modal
         setUsers((prev) => prev.filter((user) => user._id !== userIdToDelete));
         setShowModal(false);
       } else {
@@ -78,6 +90,8 @@ const DashUsers = () => {
               <Table.HeadCell>Admin</Table.HeadCell>
               <Table.HeadCell>Delete</Table.HeadCell>
             </Table.Head>
+
+            {/* // Map through the users array and display the user data in the table */}
             {users.map((user) => (
               <Table.Body className="divide-y" key={user._id}>
                 <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -127,6 +141,8 @@ const DashUsers = () => {
       ) : (
         <p>You have no users yet!</p>
       )}
+
+      {/* // Modal component to confirm the user deletion */}
       <Modal
         show={showModal}
         onClose={() => setShowModal(false)}
