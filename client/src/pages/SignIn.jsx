@@ -11,6 +11,7 @@ import {
   signInFailure,
 } from "../redux/user/userSlice";
 import OAuth from "../components/OAuth";
+import axios from "axios";
 
 //Create a functional component SignIn
 const SignIn = () => {
@@ -45,23 +46,33 @@ const SignIn = () => {
       dispatch(signInStart());
 
       // Post the form data to the server using async function fetch to sign in the user
-      const res = await fetch("/api/auth/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+
+      const res = axios
+        .post("/api/auth/signin", formData)
+        .then((res) => {
+          dispatch(signInSuccess(res.data));
+          navigate("/");
+        })
+        .catch((error) => {
+          dispatch(signInFailure(error.message));
+        });
+      // const res = await fetch("/api/auth/signin", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(formData),
+      // });
 
       // If response is not OK then dispatch the signInFailure action with the message "Invalid email or password"
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(signInFailure(data.message));
-      }
+      // const data = await res.json();
+      // if (data.success === false) {
+      //   dispatch(signInFailure(data.message));
+      // }
 
       // If response is OK then dispatch the signInSuccess action with the data and navigate to the home page
-      if (res.ok) {
-        dispatch(signInSuccess(data));
-        navigate("/");
-      }
+      // if (res.ok) {
+      //   dispatch(signInSuccess(data));
+      //   navigate("/");
+      // }
     } catch (error) {
       // If there is an error then dispatch the signInFailure action with the error message
       dispatch(signInFailure(error.message));
