@@ -48,13 +48,13 @@ const SignIn = () => {
       // Post the form data to the server using async function fetch to sign in the user
 
       const res = axios
-        .post("/api/auth/signin", formData)
+        .post("/api/auth/signin", JSON.stringify(formData))
         .then((res) => {
           dispatch(signInSuccess(res.data));
           navigate("/");
         })
         .catch((error) => {
-          console.log(error);
+          // console.log(error);
           dispatch(signInFailure(error.message));
         });
       // const res = await fetch("/api/auth/signin", {
