@@ -39,10 +39,10 @@ app.use("/api/post", postRouter);
 app.use("/api/comment", commentRouter);
 
 // for render deployment
-const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "/client/dist")));
+const dirname1 = path.resolve();
+app.use(express.static(path.join(dirname1, "/client/dist")));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+  res.sendFile(path.join(dirname1, "client", "dist", "index.html"));
 });
 
 // error handling middleware  function
