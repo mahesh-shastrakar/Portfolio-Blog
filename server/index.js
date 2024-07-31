@@ -10,6 +10,7 @@ const authRouter = require("./routes/auth.route");
 const postRouter = require("./routes/post.route");
 const commentRouter = require("./routes/comment.route");
 const { errorHandler } = require("./middlewares/errorHandler");
+const path = require("path");
 
 // connect to database
 mongoose
@@ -23,18 +24,26 @@ mongoose
 
 // create express app
 const app = express();
-const corsOptions = {
-  origin: ["https://maheshshastrakar.online"],
-  optionsSuccessStatus: 200,
-};
+// const corsOptions = {
+//   origin: ["https://maheshshastrakar.online"],
+//   optionsSuccessStatus: 200,
+// };
 // middleware functions for parsing incoming requests
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/post", postRouter);
 app.use("/api/comment", commentRouter);
+
+// for render deployment
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "/client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+});
 
 // error handling middleware  function
 app.use(errorHandler);
