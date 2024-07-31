@@ -54,6 +54,7 @@ const SignIn = () => {
           navigate("/");
         })
         .catch((error) => {
+          console.log(error);
           dispatch(signInFailure(error.message));
         });
       // const res = await fetch("/api/auth/signin", {
