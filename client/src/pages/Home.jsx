@@ -1,7 +1,6 @@
 // Importing Required Libraries
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-
 // Importing Components
 import CallToAction from "../components/CallToAction";
 import PostCard from "../components/PostCard";

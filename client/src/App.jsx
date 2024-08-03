@@ -18,7 +18,7 @@ import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 import Search from "./pages/Search";
-
+import WatsonAssistant from "./services/WatsonAssistant";
 // Create a functional component App
 function App() {
   return (
@@ -26,7 +26,6 @@ function App() {
       {/* // Render the Router component with the Header, Routes, and FooterComponent components */}
       <Router>
         <Header />
-
         {/* // Render the Routes component with the Route components for the different paths */}
         <Routes>
           <Route path="/" element={<Home />}></Route>
@@ -48,6 +47,7 @@ function App() {
           </Route>
           <Route path="/post/:postSlug" element={<PostPage />}></Route>
         </Routes>
+        <WatsonAssistant />
         <FooterComponent />
       </Router>
     </>
