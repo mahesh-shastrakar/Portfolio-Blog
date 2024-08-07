@@ -7,7 +7,7 @@ import { Link, useParams } from "react-router-dom";
 import CallToAction from "../components/CallToAction";
 import CommentSection from "../components/CommentSection";
 import PostCard from "../components/PostCard";
-
+import ShareComponent from "../components/ShareComponent";
 // PostPage Component to display the post page with the post content
 export default function PostPage() {
   // useParams hook to get the postSlug from the URL params
@@ -119,7 +119,8 @@ export default function PostPage() {
         className="p-3 max-w-2xl mx-auto w-full post-content"
         dangerouslySetInnerHTML={{ __html: post && post.content }}
       ></div>
-
+      {/* // share the post on WhatsApp,LinkedIn,Telegram,Twitter, facebook and Email using react-share components with a message */}
+      <ShareComponent post={post} />
       {/* // CallToAction component to display the call to action section to redirect to github profile */}
       <div className="max-w-4xl mx-auto w-full">
         <CallToAction />
